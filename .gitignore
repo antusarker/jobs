@@ -1,0 +1,9 @@
+/vendor
+/.idea
+Homestead.json
+composer.lock
+Homestead.yaml
+.env
+.env_local
+.env_prod
+/public/uploads
