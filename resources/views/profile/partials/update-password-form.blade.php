@@ -1,9 +1,6 @@
 <section>
     <div class="row">
             <div class="col-xl-6 col-xxl-12">
-                @include('common.message')
-            </div>
-            <div class="col-xl-6 col-xxl-12">
                 <div class="card">
                     <div class="card-text">
                         <h3 class="py-3 px-3 mb-0">Update Password</h3>

@@ -29,13 +29,11 @@
                                 @csrf
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
-                                        <label>Job Title</label>
+                                        <label>Job Title *</label>
                                         <input type="text" class="form-control" name="title" value="{{ old('title') }}" placeholder="Ex: Sr. Software Engineer">
                                     </div>
-                                </div>
-                                <div class="form-row">
                                     <div class="form-group col-md-4">
-                                        <label>Location</label>
+                                        <label>Location *</label>
                                         <select class="form-control" name="location">
                                             <option selected>Choose...</option>
                                             @foreach (job_locations() as $key => $value)
@@ -44,7 +42,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Job Type</label>
+                                        <label>Job Type *</label>
                                         <select class="form-control" name="job_type">
                                             <option selected>Choose...</option>
                                             @foreach (job_types() as $key => $value)
@@ -53,7 +51,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Experience Level</label>
+                                        <label>Experience Level *</label>
                                         <select class="form-control" name="experience_level">
                                             <option selected>Choose...</option>
                                             @foreach (experience_levels() as $key => $value)
@@ -62,20 +60,20 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Min Salary</label>
+                                        <label>Min Salary *</label>
                                         <input type="text" class="form-control number-only" name="min_salary" value="{{ old('min_salary') }}">
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Max Salary</label>
+                                        <label>Max Salary *</label>
                                         <input type="text" class="form-control number-only" name="max_salary" value="{{ old('max_salary') }}">
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Deadline</label>
+                                        <label>Deadline *</label>
                                         <input type="date" class="form-control" name="expires_at" value="{{ old('expires_at') }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Description</label>
+                                    <label>Description *</label>
                                     <textarea class="form-control" id="ckeditor" name="description" rows="10" cols="60">{{ old('description') }}</textarea>
                                 </div>
                                 <div class="form-group">

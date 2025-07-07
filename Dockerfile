@@ -1,24 +1,32 @@
-FROM php:8.2
+FROM php:8.2-fpm-alpine
 
-# 1. Install system dependencies including postgresql-client
-RUN apt-get update -y && apt-get install -y \
-    openssl zip unzip git libpq-dev libonig-dev postgresql-client \
-    && docker-php-ext-install pdo pdo_pgsql mbstring
+WORKDIR /var/www/html
 
-# 2. Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- \
-    --install-dir=/usr/local/bin --filename=composer
+# Install dependencies
+RUN apk add --no-cache \
+    git \
+    unzip \
+    libpq-dev \
+    postgresql-client
 
-WORKDIR /app
+# Install PHP extensions
+RUN docker-php-ext-install pdo pdo_pgsql
+
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+
+# Copy only what's needed for composer install
+COPY composer.json composer.lock ./
+
+# Install packages (no scripts)
+RUN composer install --no-scripts --no-dev
+
+# Copy everything else
 COPY . .
 
-# 3. Only install dependencies during build
-RUN composer install --no-dev --optimize-autoloader
+# Set permissions
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-# 4. Startup script will handle migrations
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
-
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
-EXPOSE 8000
+# Run artisan commands AFTER container starts (not during build)
+# CMD ["sh", "-c", "php artisan storage:link && php artisan migrate --force && php-fpm"]
+CMD ["sh", "-c", "php artisan storage:link && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000"]

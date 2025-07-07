@@ -1,56 +1,30 @@
-version: "3.8"
-
-networks:
-  application:
-    driver: bridge
+version: '3.8'
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: mybackend
+    build: .
     ports:
       - "8000:8000"
     volumes:
-      - ./:/var/www/html
-      - ./vendor:/var/www/html/vendor
-    depends_on:
-      db:
-        condition: service_healthy
+      - .:/var/www/html
     environment:
-      - DB_HOST=db
-      - DB_PORT=5432
-      - DB_DATABASE=jouleslabdb
-      - DB_USERNAME=postgres
-      - DB_PASSWORD=antu
-    networks:
-      - application
-    restart: unless-stopped
-    # Removed the 'command' block here.
-    # The docker-entrypoint.sh script will now handle migrations and serving.
+      DB_HOST: modularization_db  # Must match the service name below
+      DB_PORT: 5432
+      DB_DATABASE: jouleslabdb
+      DB_USERNAME: postgres
+      DB_PASSWORD: antu
+    depends_on:
+      - db
 
   db:
-    image: postgres:17
-    container_name: mypgdb
+    image: postgres:15-alpine
+    container_name: modularization_db  # Add this if you need this specific name
     environment:
+      POSTGRES_DB: jouleslabdb
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: antu
-      POSTGRES_DB: jouleslabdb
-      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256 --auth-local=scram-sha-256"
-      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5433:5432"
-    networks:
-      - application
-    healthcheck:
-      test: ["CMD-SHELL", "PGPASSWORD=antu pg_isready -U postgres -d jouleslabdb"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
 
 volumes:
   postgres_data:
