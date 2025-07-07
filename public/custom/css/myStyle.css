@@ -1,0 +1,4 @@
+/* Make editor editable area taller */
+    .ck-editor__editable_inline {
+      min-height: 250px;
+    }

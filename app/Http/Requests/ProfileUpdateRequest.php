@@ -25,6 +25,15 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'expected_salary' => [
+                Rule::requiredIf($this->user()->role_id === 3),
+                'numeric',
+                'min:0',
+            ],
+            'location' => 'required|integer',
+            'phone' => ['nullable', 'string', 'max:20'],
+            'website' => ['nullable', 'string'],
+            'linkedin' => ['nullable', 'string']
         ];
     }
 }

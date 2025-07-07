@@ -16,13 +16,14 @@ return new class extends Migration
             $table->foreignId('employer_id')->constrained('users');
             $table->string('title');
             $table->text('description');
-            $table->string('location');
-            $table->decimal('salary', 10, 2)->nullable();
-            $table->enum('type', ['full-time', 'part-time', 'contract', 'freelance']);
-            $table->enum('experience_level', ['entry', 'mid', 'senior']);
+            $table->unsignedTinyInteger('location');
+            $table->decimal('min_salary', 10, 2)->nullable();
+            $table->decimal('max_salary', 10, 2)->nullable();
+            $table->unsignedTinyInteger('job_type');
+            $table->unsignedTinyInteger('experience_level');
             $table->timestamp('posted_at')->useCurrent();
             $table->timestamp('expires_at')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->unsignedTinyInteger('is_active')->default(1);
             $table->timestamps();
         });
     }

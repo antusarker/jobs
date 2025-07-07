@@ -8,11 +8,12 @@
     <title>@yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('custom/images/favicon.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('custom/images/logo.png')}}">
     <link rel="stylesheet" href="{{asset('custom/vendor/owl-carousel/css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('custom/vendor/owl-carousel/css/owl.theme.default.min.css')}}">
     <link href="{{asset('custom/vendor/jqvmap/css/jqvmap.min.css')}}" rel="stylesheet">
     <link href="{{asset('custom/css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('custom/css/myStyle.css')}}" rel="stylesheet">
 </head>
 
 <body>
@@ -41,7 +42,7 @@
             Nav header start
         ***********************************-->
         <div class="nav-header">
-            <a href="index.html" class="brand-logo">
+            <a href="javascript:;" class="brand-logo">
                 <img class="logo-abbr" src="{{asset('custom/images/logo.png')}}" alt="">
                 <img class="logo-compact" src="{{asset('custom/images/logo-text.png')}}" alt="">
                 <img class="brand-title" src="{{asset('custom/images/logo-text.png')}}" alt="">
@@ -106,7 +107,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <p class="px-4 mb-1"><b>{{auth()->user()->name}} | {{auth()->user()->role->name}}</b></p>
-                                    <a href="./app-profile.html" class="dropdown-item">
+                                    <a href="{{route('profile.edit')}}" class="dropdown-item">
                                         <i class="icon-user"></i>
                                         <span class="ml-2">Profile </span>
                                     </a>
@@ -133,26 +134,59 @@
             <div class="quixnav-scroll">
                 <ul class="metismenu" id="menu">
                     <li class="nav-label first">Main Menu</li>
+                    @if(auth()->user()->role_id == 1)
                     <li><a href="{{URL::To('dashboard')}}" aria-expanded="false"><i class="icon icon-home"></i><span
                                 class="nav-text">Dashboard</span></a></li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-single-04"></i><span class="nav-text">Employer</span></a>
                         <ul aria-expanded="false">
-                            <li><a href="./app-profile.html">Employer List</a></li>
+                            <li><a href="{{route('employer.list')}}">Employer List</a></li>
                         </ul>
                     </li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-single-04"></i><span class="nav-text">Candidate</span></a>
                         <ul aria-expanded="false">
-                            <li><a href="./app-profile.html">Candidate List</a></li>
+                            <li><a href="{{route('candidate.list')}}">Candidate List</a></li>
                         </ul>
                     </li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="icon icon-chart-bar-33"></i><span class="nav-text">Application</span></a>
+                                class="mdi mdi-eventbrite"></i><span class="nav-text">Jobs</span></a>
                         <ul aria-expanded="false">
-                            <li><a href="./chart-flot.html">Application List</a></li>
+                            <li><a href="{{route('job.list')}}">Job List</a></li>
                         </ul>
                     </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="mdi mdi-application"></i><span class="nav-text">Application</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('application.all')}}">Application List</a></li>
+                        </ul>
+                    </li>
+                    @endif
+
+                    @if(auth()->user()->role_id == 2)
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="mdi mdi-eventbrite"></i><span class="nav-text">Jobs</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('job.create')}}">Create Job</a></li>
+                            <li><a href="{{route('job.list')}}">Job List</a></li>
+                        </ul>
+                    </li>
+                    @endif
+
+                    @if(auth()->user()->role_id == 3)
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="mdi mdi-eventbrite"></i><span class="nav-text">Jobs</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('job.list')}}">Job List</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="mdi mdi-application"></i><span class="nav-text">Application</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('application.all')}}">Application List</a></li>
+                        </ul>
+                    </li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -225,10 +259,17 @@
     <script src="{{asset('custom/vendor/jqvmap/js/jquery.vmap.min.js')}}"></script>
     <script src="{{asset('custom/vendor/jqvmap/js/jquery.vmap.usa.js')}}"></script>
     <script src="{{asset('custom/vendor/jquery.counterup/jquery.counterup.min.js')}}"></script>
-
-
     <script src="{{asset('custom/js/dashboard/dashboard-1.js')}}"></script>
 
-</body>
+    <script src="{{asset('custom/js/myJs.js')}}"></script>
 
+    <script src="https://cdn.ckeditor.com/ckeditor5/29.2.0/classic/ckeditor.js"></script>
+    <script type="text/javascript">
+        ClassicEditor
+        .create(document.querySelector('#ckeditor'))
+        .catch(error => {
+            console.error(error);
+        });
+    </script>
+</body>
 </html>

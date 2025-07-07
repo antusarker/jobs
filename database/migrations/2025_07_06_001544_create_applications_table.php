@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->text('cover_letter')->nullable();
             $table->string('resume_path');
-            $table->enum('status', ['submitted', 'reviewed', 'shortlisted', 'rejected'])->default('submitted');
+            $table->unsignedTinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 class Application extends Model
 {
     protected $fillable = [
-        'cover_letter', 'resume_path', 'status'
+        'job_id', 'candidate_id', 'cover_letter', 'resume_path', 'status'
     ];
 
     public function job()
     {
-        return $this->belongsTo(Job::class);
+        return $this->belongsTo(PostedJob::class);
     }
 
     public function candidate()

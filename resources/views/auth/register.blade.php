@@ -14,7 +14,7 @@
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+        </div>        
 
         <!-- Password -->
         <div class="mt-4">
@@ -37,6 +37,19 @@
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <div class="block mt-4">
+            <x-input-label for="User Type" :value="__('User Type')" />
+            <label for="employer" class="inline-flex items-center">
+                <input id="employer" type="radio" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="role_id" value="2">
+                <span class="ms-2 text-sm text-gray-600">{{ __('Employer') }}</span>
+            </label>
+
+            <label for="candidate" class="inline-flex items-center">
+                <input id="candidate" type="radio" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="role_id" value="3">
+                <span class="ms-2 text-sm text-gray-600">{{ __('Candidate') }}</span>
+            </label>
         </div>
 
         <div class="flex items-center justify-end mt-4">

@@ -21,7 +21,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id'
+        'role_id',
+        'phone',
+        'linkedin',
+        'website',
+        'location',
+        'expected_salary'
     ];
 
     /**
@@ -65,5 +70,15 @@ class User extends Authenticatable
     public function isCandidate()
     {
         return $this->role->name === 'candidate';
+    }
+
+    public function jobs()
+    {
+        return $this->hasMany(PostedJob::class, 'employer_id');
+    }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class, 'candidate_id');
     }
 }

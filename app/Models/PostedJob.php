@@ -11,8 +11,9 @@ class PostedJob extends Model
         'title',
         'description',
         'location',
-        'salary',
-        'type',
+        'min_salary',
+        'max_salary',
+        'job_type',
         'experience_level',
         'expires_at',
         'is_active',
@@ -26,6 +27,6 @@ class PostedJob extends Model
 
     public function applications()
     {
-        return $this->hasMany(Application::class);
+        return $this->hasMany(Application::class, 'job_id');
     }
 }

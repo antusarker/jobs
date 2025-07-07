@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Employer;
 use App\Http\Controllers\Controller;
 use App\Models\PostedJob as Job;
 use Illuminate\Http\Request;
+use Validator;
+use Session;
 
 class JobController extends Controller
 {
-    public function index()
-    {
-        $jobs = auth()->user()->jobs()->latest()->paginate(10);
-        return view('employer.jobs.index', compact('jobs'));
+    public function index(){
+        $data['jobs'] = Job::where('is_active', 1)->latest()->get();
+        if(auth()->user()->role_id == 2){
+            $data['jobs'] = auth()->user()->jobs()->where('is_active', 1)->latest()->get();
+        }        
+        return view('employer.jobs.index', $data);
     }
 
     public function create()
@@ -20,27 +24,54 @@ class JobController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        // dd($request->all());
+
+        $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'location' => 'required|string|max:255',
-            'salary' => 'nullable|numeric',
-            'type' => 'required|in:full-time,part-time,contract,freelance',
-            'experience_level' => 'required|in:entry,mid,senior',
-            'expires_at' => 'nullable|date',
+            'location' => 'required|integer',
+            'min_salary' => 'required|numeric|min:0',
+            'max_salary' => 'required|numeric|gte:min_salary',
+            'job_type' => 'required|integer',
+            'experience_level' => 'required|integer',
+            'expires_at' => 'nullable|date|after:today',
+            'is_active' => 'required|boolean',
         ]);
 
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            $errorList = '<ul>';
+            $errorList .= '<b>Note: All Star <span style="color:red">(*)</span> mark is Required !</b>';
+            foreach ($errors->all() as $error) {
+                $errorList .= '<li>' . $error . '</li>';
+            }
+            $errorList .= '</ul>';
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('flash_message', $errorList)
+                ->with('status_color', 'warning');
+        }
+
+        $validated = $validator->validated();
         auth()->user()->jobs()->create($validated);
 
-        return redirect()->route('employer.jobs.index')
-            ->with('success', 'Job posted successfully');
+        Session::flash('flash_message','Job posted successfully !');
+        return redirect()->back()->with('status_color','success');
     }
 
     public function show(Job $job)
     {
-        $this->authorize('view', $job);
-        $applications = $job->applications()->with('candidate')->get();
-        return view('employer.jobs.show', compact('job', 'applications'));
+        //$applications = $job->applications()->with('candidate')->get();
+        return view('employer.jobs.show', compact('job'));
+    }
+
+    public function jobWiseApplication(Job $job)
+    {
+        // dd($job->applications()->get());
+        // $applications = $job->applications()->with('candidate')->get();
+        $applications = $job->applications()->get();
+        return view('employer.jobs.totalApplication', compact('applications', 'job'));
     }
 
     public function edit(Job $job)
