@@ -1,16 +1,29 @@
-## Laravel 11 with Breeze Authentication
+## Project Name: HireSmart
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Role-Based Access Control
+This project uses Laravel 11 with Breeze for authentication, and implements user role-based access to manage permissions and route visibility.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## User Roles
+- **[Admin] : Has full access to all system features and management tools.**
+- **[Employer] : Can post jobs, view applicants, and manage job listings.**
+- **[Candidate] : Can browse jobs, receive job alerts, and apply to postings.**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Key Features
+- **[Breeze-Authentication] : Lightweight and modern scaffolding for login, registration, and password management.**
+- **[Role-Middleware] : Custom middleware restricts route access based on user role.**
+- **[Clean-Architecture] : Routes, controllers, and views are structured by role for easy maintenance and scalability.**
+
+## JobMatch Alert System
+is a real-time notification feature designed to instantly inform candidates about new job opportunities that align with their profiles.
+
+Current Features:
+Database Notifications
+Candidates receive in-app alerts whenever a job matching their location and expected salary is posted.
+
+Future Implementation:
+Real-Time Updates via Pusher
+Integration with Pusher will enable instant, real-time delivery of notifications without needing to refresh the page.
+
 
 ## Learning Laravel
 

@@ -3,7 +3,9 @@ namespace App\Http\Controllers\Employer;
 
 use App\Http\Controllers\Controller;
 use App\Models\PostedJob as Job;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Notifications\NewJobPosted;
 use Validator;
 use Session;
 
@@ -54,7 +56,18 @@ class JobController extends Controller
         }
 
         $validated = $validator->validated();
-        auth()->user()->jobs()->create($validated);
+        $job = auth()->user()->jobs()->create($validated);
+
+        // Example: Notify candidates in the same location
+        $candidates = User::where('role_id', 3) // candidate role
+                    ->where('location', $job->location)
+                    ->whereBetween('expected_salary', [$job->min_salary, $job->max_salary])
+                    ->get();
+
+        foreach ($candidates as $candidate) {
+            $candidate->notify(new NewJobPosted($job));
+            \Log::info("Notification sent");
+        }
 
         Session::flash('flash_message','Job posted successfully !');
         return redirect()->back()->with('status_color','success');

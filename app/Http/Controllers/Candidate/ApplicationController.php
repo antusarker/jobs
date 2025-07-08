@@ -14,12 +14,17 @@ class ApplicationController extends Controller
     public function index()
     {
         $applications = Application::with('job')->get();
+        if(auth()->user()->role_id == 2){
+            $applications = Application::whereHas('job', function ($query) {
+                $query->where('employer_id', auth()->id());
+            })->with(['job'])->latest()->get();
+        } 
+
         return view('admin.totalApplication', compact('applications'));
     }
 
     public function store(Request $request, Job $job)
     {
-        // dd($job);
         $validator = Validator::make($request->all(), [
             'cover_letter' => 'nullable|string',
             'resume_path' => 'required|file|mimes:pdf|max:2048',

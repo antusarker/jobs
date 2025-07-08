@@ -66,7 +66,7 @@
                 <nav class="navbar navbar-expand">
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
-                            <div class="search_bar dropdown">
+                            <div class="search_bar dropdown d-none">
                                 <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
                                     <i class="mdi mdi-magnify"></i>
                                 </span>
@@ -79,6 +79,7 @@
                         </div>
 
                         <ul class="navbar-nav header-right">
+                            @if(auth()->user()->role_id == 3)
                             <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                                     <i class="mdi mdi-bell"></i>
@@ -86,21 +87,27 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <ul class="list-unstyled">
+                                        <!-- Notifications List -->
+                                        @forelse(auth()->user()->unreadNotifications as $notification)
                                         <li class="media dropdown-item">
                                             <span class="success"><i class="ti-user"></i></span>
                                             <div class="media-body">
-                                                <a href="#">
-                                                    <p><strong>Martin</strong> has added a <strong>customer</strong> Successfully
+                                                <a href="{{ $notification->data['link'] ?? '#' }}">
+                                                    <p><strong>{{ $notification->data['title'] }}</strong> {{ $notification->data['message'] }}
                                                     </p>
                                                 </a>
                                             </div>
-                                            <span class="notify-time">3:20 am</span>
+                                            <span class="notify-time">{{ $notification->created_at->diffForHumans() }}</span>
                                         </li>
+                                        @empty
+                                            <li class="media dropdown-item text-center">
+                                                <span>No notifications found <i class="ti-face-smile"></i></span>
+                                            </li>
+                                        @endforelse
                                     </ul>
-                                    <a class="all-notification" href="#">See all notifications <i
-                                            class="ti-arrow-right"></i></a>
                                 </div>
                             </li>
+                            @endif
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                                     <i class="mdi mdi-account"></i>
@@ -171,6 +178,12 @@
                             <li><a href="{{route('job.list')}}">Job List</a></li>
                         </ul>
                     </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                class="mdi mdi-application"></i><span class="nav-text">Application</span></a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('application.all')}}">Application List</a></li>
+                        </ul>
+                    </li>
                     @endif
 
                     @if(auth()->user()->role_id == 3)
@@ -178,12 +191,6 @@
                                 class="mdi mdi-eventbrite"></i><span class="nav-text">Jobs</span></a>
                         <ul aria-expanded="false">
                             <li><a href="{{route('job.list')}}">Job List</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
-                                class="mdi mdi-application"></i><span class="nav-text">Application</span></a>
-                        <ul aria-expanded="false">
-                            <li><a href="{{route('application.all')}}">Application List</a></li>
                         </ul>
                     </li>
                     @endif
