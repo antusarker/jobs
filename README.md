@@ -24,6 +24,25 @@ Future Implementation:
 Real-Time Updates via Pusher
 Integration with Pusher will enable instant, real-time delivery of notifications without needing to refresh the page.
 
+## Archive Old Jobs & Remove Unverified Users (Scheduled Tasks)
+
+Scheduled tasks are defined in the project to automate:
+- **Archiving job posts older than 30 days**
+- **Removing unverified users**
+
+
+## In Development
+You can manually run the Laravel scheduler:
+- **php artisan schedule:run**
+
+## In Production
+In production, Laravel's scheduler must be triggered **daily** using a system-level cron job.
+Add this to your system’s crontab to enable automatic scheduling:
+
+```bash
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+
+
 
 ## Learning Laravel
 
