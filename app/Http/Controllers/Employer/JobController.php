@@ -6,16 +6,38 @@ use App\Models\PostedJob as Job;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Notifications\NewJobPosted;
+use Illuminate\Support\Facades\Cache;
 use Validator;
 use Session;
 
 class JobController extends Controller
 {
     public function index(){
-        $data['jobs'] = Job::where('is_active', 1)->latest()->get();
-        if(auth()->user()->role_id == 2){
-            $data['jobs'] = auth()->user()->jobs()->where('is_active', 1)->latest()->get();
-        }        
+        // $data['jobs'] = Job::where('is_active', 1)->latest()->get();
+        // if(auth()->user()->role_id == 2){
+        //     $data['jobs'] = auth()->user()->jobs()->where('is_active', 1)->latest()->get();
+        // }        
+        // return view('employer.jobs.index', $data);
+
+
+        $user = auth()->user();
+        
+        if ($user->role_id != 2) {
+            // Cache recent jobs (5 minutes cache)
+            $data['recent_jobs'] = Cache::remember('recent_jobs', 300, function() {
+                return Job::where('is_active', 1)->latest()->take(4)->get();
+            });
+        }
+
+        // Cache all jobs with different keys for employers vs others (1 hour cache)
+        $cacheKey = $user->role_id == 2 ? "employer_{$user->id}_jobs" : 'all_jobs';
+        
+        $data['jobs'] = Cache::remember($cacheKey, 3600, function() use ($user) {
+            $query = $user->role_id == 2 ? $user->jobs() : Job::query();
+                
+            return $query->where('is_active', 1)->latest()->get();
+        });
+
         return view('employer.jobs.index', $data);
     }
 
