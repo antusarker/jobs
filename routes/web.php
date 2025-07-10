@@ -30,7 +30,7 @@ Route::middleware(['auth', 'role:admin,employer'])->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/job/create', [JobController::class, 'create'])->name('job.create');
     Route::post('/job/store', [JobController::class, 'store'])->name('job.store');
-    Route::get('/job/list', [JobController::class, 'index'])->name('job.list');
+    Route::get('/job/list', [JobController::class, 'index'])->name('job.list')->middleware('cache.redis:120'); // 30 minutes
     Route::get('/job/{job}/show', [JobController::class, 'show'])->name('job.details');
     Route::get('/job-wise-application/{job}/list', [JobController::class, 'jobWiseApplication'])->name('job.wise.application.list');
 
