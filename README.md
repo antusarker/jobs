@@ -7,7 +7,7 @@ cd /jobs
 composer install
 ```
 
-## JWT Applied for
+## JWT - Token Based API Created for
 - **[Login]**
 - **[Registration(Employer/Candidate)]**
 - **[GetCurrentUser]**
