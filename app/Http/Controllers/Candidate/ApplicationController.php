@@ -7,7 +7,8 @@ use App\Models\PostedJob as Job;
 use Illuminate\Http\Request;
 use App\Services\ApplicationService;
 use App\Http\Requests\StoreApplicationRequest;
-use Validator;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Validation\ValidationException;
 use Session;
 
 class ApplicationController extends Controller
@@ -27,6 +28,16 @@ class ApplicationController extends Controller
 
     public function store(StoreApplicationRequest $request, Job $job)
     {
+        $key = 'application-submit:' . $request->ip();
+
+        if (RateLimiter::tooManyAttempts($key, 3)) {
+            $seconds = RateLimiter::availableIn($key);
+            Session::flash('flash_message', "Too many application submissions. Please try again in {$seconds} seconds.");
+            return redirect()->back()->with('status_color', 'warning');
+        }
+
+        RateLimiter::hit($key, 300);
+
         $this->applicationService->storeApplication($request, $job->id, auth()->id());
         Session::flash('flash_message','Application submitted successfully!');
         return redirect()->back()->with('status_color','success');

@@ -27,7 +27,7 @@
                         <h5 class="card-title">{{$application->candidate->name}}</h5>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">{!! \Str::limit($application->cover_letter, 300, '...') !!}</p>
+                        <p class="card-text">{{ $application->cover_letter }}</p>
                     </div>
                     <div class="card-footer d-sm-flex justify-content-between">
                         <div class="card-footer-link mb-4 mb-sm-0">

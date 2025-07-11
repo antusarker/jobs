@@ -34,7 +34,7 @@
                         </span>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">{!! \Str::limit($job->description, 300, '...') !!}</p>
+                        <p class="card-text">{{ \Str::limit(strip_tags($job->description), 300, '...') }}</p>
                         <i>Posted by : {{$job->employer->name}}</i>
                     </div>
                     <div class="card-footer d-sm-flex justify-content-between">
@@ -115,7 +115,7 @@
                         </span>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">{!! \Str::limit($job->description, 300, '...') !!}</p>
+                        <p class="card-text">{{ \Str::limit(strip_tags($job->description), 300, '...') }}</p>
                         <i>Posted by : {{$job->employer->name}}</i>
                     </div>
                     <div class="card-footer d-sm-flex justify-content-between">
