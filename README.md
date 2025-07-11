@@ -28,6 +28,8 @@ admin@gmail.com
 Admin@123456
 ```
 
+## User Account Verification using SMTP Service.
+
 ## JWT - Token Based API Created for
 - **[Login]**
 - **[Registration(Employer/Candidate)]**
@@ -87,5 +89,3 @@ Add this to your system’s crontab to enable automatic scheduling:
 ```bash
 app\Helpers\helpers.php
 ```
-
-## User Account Verification using SMTP Service.
