@@ -5,6 +5,18 @@
 git clone https://github.com/antusarker/jobs.git
 cd /jobs
 composer install
+Generating a Laravel Application Key:
+php artisan key:generate
+
+Run Migration and Seeder:
+php artisan migrate:fresh --seed
+
+Run Project:
+php artisan serve
+
+Create JWT secret:
+php artisan jwt:secret
+
 ```
 
 ## JWT - Token Based API Created for
@@ -60,3 +72,8 @@ Add this to your system’s crontab to enable automatic scheduling:
 ## Rate-limit
 - **Applied to Login Attempts**
 - **Applied to Candidate Job Application Submissions**
+
+## PostgreSQL 17
+## Redis - Database Used for Candidate List, Employer List, Application List & Job List
+## All Migration file Created.
+## 
