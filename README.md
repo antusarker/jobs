@@ -13,10 +13,16 @@ php artisan migrate:fresh --seed
 
 Run Project:
 php artisan serve
+Project running at [http://127.0.0.1:8000]
 
 Create JWT secret:
 php artisan jwt:secret
+```
 
+## Admin Credential
+```bash
+admin@gmail.com
+Admin@123456
 ```
 
 ## JWT - Token Based API Created for
@@ -75,5 +81,8 @@ Add this to your system’s crontab to enable automatic scheduling:
 
 ## PostgreSQL 17
 ## Redis - Database Used for Candidate List, Employer List, Application List & Job List
-## All Migration file Created.
-## 
+## All Migration && Seeder file Created.
+## job_locations, job_types && experience_levels currently created in helper function.
+```bash
+app\Helpers\helpers.php
+```
