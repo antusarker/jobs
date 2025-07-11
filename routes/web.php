@@ -5,6 +5,7 @@ use App\Http\Controllers\Candidate\ApplicationController;
 use App\Http\Controllers\Employer\EmployerController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\OtpController;
 use App\Http\Controllers\Employer\JobController;
 use App\Http\Controllers\Candidate\CandidateController;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('/send-otp', [OtpController::class, 'sendOtp'])->name('send.otp');
+    Route::post('/verify-otp', [OtpController::class, 'verifyOtp'])->name('verify.otp');
 });
 
 require __DIR__.'/auth.php';

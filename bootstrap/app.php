@@ -22,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withSchedule(function (Illuminate\Console\Scheduling\Schedule $schedule) {
-        $schedule->command('app:archive-old-jobs')->everyMinute(); // For testing
+        $schedule->command('app:archive-old-jobs')->daily();
+        $schedule->command('app:remove-unverified-users')->weeklyOn(0, '00:00');
     })
     ->create();

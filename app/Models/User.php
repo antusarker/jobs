@@ -21,12 +21,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'otp_code',
         'role_id',
         'phone',
         'linkedin',
         'website',
         'location',
-        'expected_salary'
+        'expected_salary',
+        'email_verified_at'
     ];
 
     /**

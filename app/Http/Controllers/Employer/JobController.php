@@ -3,13 +3,10 @@ namespace App\Http\Controllers\Employer;
 
 use App\Http\Controllers\Controller;
 use App\Models\PostedJob as Job;
-use App\Models\User;
 use Illuminate\Http\Request;
-use App\Notifications\NewJobPosted;
 use App\Services\JobService;
 use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
-use Validator;
 use Session;
 
 class JobController extends Controller

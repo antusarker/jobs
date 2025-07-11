@@ -28,7 +28,7 @@ class ArchiveOldJobs extends Command
     {
         $affected = DB::table('posted_jobs')
             ->where('is_active', 1)
-            ->where('created_at', '<', now()->subDays(1))
+            ->where('created_at', '<', now()->subDays(30))
             ->update(['is_active' => 0]);
 
         $this->info("Archived $affected job(s).");

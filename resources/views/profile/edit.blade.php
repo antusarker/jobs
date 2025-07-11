@@ -19,6 +19,9 @@
         <!-- row -->
         <div class="row">
             <div class="col-xl-6 col-xxl-12">
+                @if(empty(auth()->user()->email_verified_at))
+                    @include('profile.partials.email-verification')
+                @endif
                 @include('profile.partials.update-profile-information-form')
                 @include('profile.partials.update-password-form')
             </div>
