@@ -91,7 +91,8 @@ app\Helpers\helpers.php
 ```
 
 ## Dockerization
-Cache Clear
+Docker file added in project root.
+
 ```bash
 # Clear Docker cache
 Remove-Item -Force -Recurse public/storage
