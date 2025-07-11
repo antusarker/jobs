@@ -86,3 +86,5 @@ Add this to your system’s crontab to enable automatic scheduling:
 ```bash
 app\Helpers\helpers.php
 ```
+
+## User Account Verification using SMTP Service.
