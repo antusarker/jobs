@@ -32,10 +32,18 @@ class JobService
     public function createAndNotify(array $data, User $user): Job
     {
         $job = $this->jobRepo->createJobForUser($data, $user);
-
+        
         $candidates = User::where('role_id', 3)
-            ->where('location', $job->location)
-            ->whereBetween('expected_salary', [$job->min_salary, $job->max_salary])
+            ->where(function ($query) use ($job) {
+                $query->where('location', $job->location)
+                    ->orWhere(function ($q) use ($job) {
+                        $q->where('job_skill', $job->job_skill)
+                            ->whereBetween('expected_salary', [
+                                $job->min_salary, 
+                                $job->max_salary
+                            ]);
+                    });
+            })
             ->get();
 
         foreach ($candidates as $candidate) {
@@ -59,9 +67,17 @@ class JobService
 
         if ($oldLocation != $job->location) {
             $candidates = User::where('role_id', 3)
-                ->where('location', $job->location)
-                ->whereBetween('expected_salary', [$job->min_salary, $job->max_salary])
-                ->get();
+            ->where(function ($query) use ($job) {
+                $query->where('location', $job->location)
+                    ->orWhere(function ($q) use ($job) {
+                        $q->where('job_skill', $job->job_skill)
+                            ->whereBetween('expected_salary', [
+                                $job->min_salary, 
+                                $job->max_salary
+                            ]);
+                    });
+            })
+            ->get();
 
             foreach ($candidates as $candidate) {
                 $candidate->notify(new \App\Notifications\NewJobPosted($job));

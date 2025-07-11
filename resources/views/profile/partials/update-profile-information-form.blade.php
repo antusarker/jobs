@@ -43,6 +43,15 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Skill</label>
+                                        <select class="form-control" name="job_skill">
+                                            <option selected>Choose...</option>
+                                            @foreach (job_skills() as $key => $value)
+                                                <option value="{{ $key }}" {{ $user->job_skill == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     @if($user->role_id == 3)
                                     <div class="form-group col-md-6">
                                         <label>Expected Salary</label>

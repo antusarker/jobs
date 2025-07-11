@@ -13,8 +13,11 @@ services:
       DB_DATABASE: jouleslabdb
       DB_USERNAME: postgres
       DB_PASSWORD: antu
+      REDIS_HOST: redis     # Add Redis host env var
+      REDIS_PORT: 6379
     depends_on:
       - db
+      - redis
 
   db:
     image: postgres:15-alpine
@@ -25,6 +28,12 @@ services:
       POSTGRES_PASSWORD: antu
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
 
 volumes:
   postgres_data:

@@ -27,6 +27,7 @@ class User extends Authenticatable
         'linkedin',
         'website',
         'location',
+        'job_skill',
         'expected_salary',
         'email_verified_at'
     ];

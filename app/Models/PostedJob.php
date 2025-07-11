@@ -11,6 +11,7 @@ class PostedJob extends Model
         'title',
         'description',
         'location',
+        'job_skill',
         'min_salary',
         'max_salary',
         'job_type',

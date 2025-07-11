@@ -60,15 +60,25 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-3">
+                                        <label>Skills *</label>
+                                        {{$job->job_skill}}
+                                        <select class="form-control" name="job_skill">
+                                            <option selected>Choose...</option>
+                                            @foreach (job_skills() as $key => $value)
+                                                <option value="{{ $key }}" {{ $job->job_skill == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
                                         <label>Min Salary *</label>
                                         <input type="text" class="form-control number-only" name="min_salary" value="{{ $job->min_salary }}">
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-3">
                                         <label>Max Salary *</label>
                                         <input type="text" class="form-control number-only" name="max_salary" value="{{ $job->max_salary }}">
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-3">
                                         <label>Deadline *</label>
                                         <input type="date" class="form-control" name="expires_at" value="{{ date('Y-m-d', strtotime($job->expires_at)) }}">
                                     </div>

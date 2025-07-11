@@ -89,3 +89,19 @@ Add this to your system’s crontab to enable automatic scheduling:
 ```bash
 app\Helpers\helpers.php
 ```
+
+## Dockerization
+Cache Clear
+```bash
+# Clear Docker cache
+Remove-Item -Force -Recurse public/storage
+docker-compose down -v
+docker builder prune --all --force
+```
+
+## Run Seeder In Docker Container
+Run following command:
+
+```bash
+docker-compose exec app php artisan migrate --seed
+```

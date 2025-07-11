@@ -30,6 +30,7 @@ class StoreJobRequest extends FormRequest
             'min_salary' => 'required|numeric|min:0',
             'max_salary' => 'required|numeric|gte:min_salary',
             'job_type' => 'required|integer',
+            'job_skill' => 'required|integer',
             'experience_level' => 'required|integer',
             'expires_at' => 'nullable|date|after:today',
             'is_active' => 'required|boolean',

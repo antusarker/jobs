@@ -6,7 +6,7 @@
                         <h3 class="py-3 px-3 mb-0">Verify your Account</h3>
                          <p class="text-warning px-3 mb-3">
                             <i class="mdi mdi-alert me-2"></i>
-                            Unverified accounts will be automatically terminated after 7 days.
+                            Unverified accounts will be automatically terminated within 7 days.
                         </p>
                     </div>
                     <div class="card-body">

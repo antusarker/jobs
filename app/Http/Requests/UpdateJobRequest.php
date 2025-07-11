@@ -19,6 +19,7 @@ class UpdateJobRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'location' => 'required|integer',
+            'job_skill' => 'required|integer',
             'min_salary' => 'required|numeric|min:0',
             'max_salary' => 'required|numeric|gte:min_salary',
             'job_type' => 'required|integer',

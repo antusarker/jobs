@@ -34,3 +34,14 @@ if (!function_exists('experience_levels')) {
         ];
     }
 }
+
+if (!function_exists('job_skills')) {
+    function job_skills(): array
+    {
+        return [
+            '1' => 'IT Industry',
+            '2' => 'Medical',
+            '3' => 'Education'
+        ];
+    }
+}

@@ -19,11 +19,13 @@
                         </span>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">{{ $job->description }}</p>
+                        <p class="card-text">{!! $job->description !!}</p>
 
                         <p class="card-text">Salary Range : {{ $job->min_salary }} - {{ $job->max_salary }}
                         <br>
                         Experience Lavel : {{ experience_levels()[$job->experience_level] }} 
+                        <br>
+                        Skill : {{ job_skills()[$job->job_skill] }} 
                         <br>
                         Deadline : {{ date('d M, Y', strtotime($job->expires_at)) }}
                         <br>
