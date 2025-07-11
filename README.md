@@ -18,6 +18,9 @@ Project running at [http://127.0.0.1:8000]
 Create JWT secret:
 php artisan jwt:secret
 ```
+## Database Setup
+- **PostgreSQL 17**
+- **Redis - Database Used for Candidate List, Employer List, Application List & Job List**
 
 ## Admin Credential
 ```bash
@@ -79,8 +82,6 @@ Add this to your system’s crontab to enable automatic scheduling:
 - **Applied to Login Attempts**
 - **Applied to Candidate Job Application Submissions**
 
-## PostgreSQL 17
-## Redis - Database Used for Candidate List, Employer List, Application List & Job List
 ## All Migration & Seeder file Created.
 ## job_locations, job_types & experience_levels currently created in helper function.
 ```bash
