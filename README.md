@@ -43,11 +43,13 @@ Scheduled tasks are defined in the project to automate:
 - **Archiving job posts older than 30 days**
 - **Removing unverified users**
 
-## In Development
+In Development
 You can manually run the Laravel scheduler:
-- **php artisan schedule:run**
+```bash
+php artisan schedule:run
+```
 
-## In Production
+In Production
 In production, Laravel's scheduler must be triggered **daily** using a system-level cron job.
 Add this to your system’s crontab to enable automatic scheduling:
 
